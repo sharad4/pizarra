@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserM
 from django.db import models
 
 class CustomUserManager(UserManager):
-    def _create_user_(self, name, eamil, password, **extra_fields):
+    def _create_user_(self, name, email, password, **extra_fields):
         if not email:
             raise ValueError("You did not provide an valid e-mail address")
         email = self.normalize_email(email)
