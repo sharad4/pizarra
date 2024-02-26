@@ -32,3 +32,21 @@ def add_project(request):
             print('Not valid')
 
     return render(request, 'project/add.html')
+
+#@login_required
+def edit_project(request, pk):
+    project = Project.objects.filter(created_by=request.user).get(pk=pk)
+
+    if request.mothod == 'POST':
+        name = request.POST.get('name', '')
+        description = request.POST.get('description', '')
+
+        if  name:
+            project.name = name
+            project.description = description
+            project.save()
+
+            return redirect('/projects/')
+    return render(request, 'project/edit.html', {
+        'project': project
+    })
