@@ -19,7 +19,7 @@ def project(request, pk):
     })
 
 #@login_required
-def add_project(request):
+def add(request):
     if request.method == 'POST':
         name = request.POST.get('name', '')
         description = request.POST.get('description', '')
@@ -34,7 +34,7 @@ def add_project(request):
     return render(request, 'project/add.html')
 
 #@login_required
-def edit_project(request, pk):
+def edit(request, pk):
     project = Project.objects.filter(created_by=request.user).get(pk=pk)
 
     if request.mothod == 'POST':
@@ -50,3 +50,10 @@ def edit_project(request, pk):
     return render(request, 'project/edit.html', {
         'project': project
     })
+
+#@login_required
+def delete(request, pk):
+    project = Project.objects.filter(created_by=request.user).get(pk=pk)
+    project.delete()
+
+    return redirect('/projects/')
